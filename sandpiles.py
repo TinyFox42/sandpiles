@@ -46,3 +46,11 @@ def settle(pile, show=debug):
         return sand
     else:
         return settle(sand,show)
+def add_piles(pile1, pile2):
+    #adds the two together, returns the resulting pile without settling, doesn't touch the input arrays
+    sand=simple(0)
+    for i in range(rows):
+        for j in range(cols):
+            sand[i][j]+=pile1[i][j]
+            sand[i][j]+=pile2[i][j]
+    return sand
