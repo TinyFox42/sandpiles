@@ -54,3 +54,21 @@ def add_piles(pile1, pile2):
             sand[i][j]+=pile1[i][j]
             sand[i][j]+=pile2[i][j]
     return sand
+#ok, I'm going to make a method that works for a 3x3 right now, and then try to make a general one later. Probably going to be a bit recursive
+def all_3x3():
+    #makes a very large list, with 262,144 members, each which is a 3x3 matrix. Fun!
+    #the members are [[a,b,c],[d,e,f],[g,h,i]]
+    piles=[]
+    #x=0
+    for a in range(4):
+        for b in range(4):
+            for c in range(4):
+                for d in range(4):
+                    for e in range(4):
+                        for f in range(4):
+                            for g in range(4):
+                                for h in range(4):
+                                    for i in range(4):
+                                        #oh god, what have I done?
+                                        piles.append([[a,b,c],[d,e,f],[g,h,i]])
+    return piles
