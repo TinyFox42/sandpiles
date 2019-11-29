@@ -1,5 +1,8 @@
 #Sandpiles are a cool idea
 #Made by Eli Thorpe
+#Hey, note for people who understand how to control the size of ints in python (I don't):
+    #A stable array can be written as (rows*cols) 2-bit ints, and I would say that 3 or 4 bits would be enough for the internal calculations
+    #So if you are running out of space, and you are able to do that in Python, switch from basic ints to bitstrings of length 4
 rows=3
 cols=3
 debug=True #controls the main testing prints
@@ -72,3 +75,38 @@ def all_3x3():
                                         #oh god, what have I done?
                                         piles.append([[a,b,c],[d,e,f],[g,h,i]])
     return piles
+
+
+
+#Ok, recursive formation of all arrays in the current dimensions
+def all_rows(rs):
+    if rs==1:
+        return [[0],[1],[2],[3]]#Returns the 4 base lists
+    else:
+        smalls=all_rows(rs-1)
+        pos=[]
+        for r in smalls:
+            for i in range(4):
+                a=r[:]
+                a.append(i)
+                pos.append(a)
+        return pos
+def all_arrs(cs, rs):
+    #Warning, at best this runs proportional to 4^(cs*rs), and this isn't the best case program
+    if cs==1:
+        pos=[]
+        r=all_rows(rs)
+        for a in r:
+            pos.append([a])
+        return pos
+    if cs>1:
+        pos=[]
+        arrs=all_arrs(cs-1,rs)
+        r=all_rows(rs)
+        for arr in arrs:
+            for row in r:
+                a=arr[:]
+                b=row[:]
+                a.append([b])
+                pos.append(a)
+        return pos
