@@ -3,6 +3,10 @@
 #Hey, note for people who understand how to control the size of ints in python (I don't):
     #A stable array can be written as (rows*cols) 2-bit ints, and I would say that 3 or 4 bits would be enough for the internal calculations
     #So if you are running out of space, and you are able to do that in Python, switch from basic ints to bitstrings of length 4
+
+#Set this to where you want to save the output. In theory you can just set this to "output.txt", but for me that will just to "C:\Users\Eli\output.txt", which isn't what I want
+output_dir="C:\\Users\\Eli\\Documents\\GitHub\\sandpiles\\output"
+output_name="output.csv"
 rows=3
 cols=3
 debug=True #controls the main testing prints
@@ -107,6 +111,44 @@ def all_arrs(cs, rs):
             for row in r:
                 a=arr[:]
                 b=row[:]
-                a.append([b])
+                a.append(b)
                 pos.append(a)
         return pos
+def main(start, adds,debug=debug):
+    #assumes that everything will work, or that you will see what the errors are and tell me
+    f=open(output_dir+"\\"+output_name,"w")
+    f.write("ID,Addition,ar1c1,ar1c2,ar1c3,ar2c1,ar2c2,ar2c3,ar3c1,ar3c2,ar3c3,Result,rr1c1,rr1c2,rr1c3,rr2c1,rr2c2,rr2c3,rr3c1,rr3c2,rr3c3\n")
+    if debug:
+        f.write("Test,123456789,1,2,3,4,5,6,7,8,9,987654321,9,8,7,6,5,4,3,2,1\n")
+    #Test looks like this:
+    #1  2  3
+    #4  5  6
+    #7  8  9
+    #And has result of this:
+    #9  8  7
+    #6  5  4
+    #3  2  1
+    for i,add in enumerate(adds):
+        f.write(str(i)+",")
+        s1=""
+        s2=""
+        for j in range(len(add)):
+            for k in range(len(add[j])):
+                s1+=str(add[j][k])
+                s2+=","+str(add[j][k])
+        f.write(s1+s2+",")
+        p=add_piles(start,add)
+        if debug:
+            print p
+        p=settle(p,show=debug)
+        s1=""
+        s2=""
+        for j in range(len(p)):
+            for k in range(len(p[j])):
+                s1+=str(p[j][k])
+                s2+=","+str(p[j][k])
+        f.write(s1+s2+"\n")
+    f.close()
+#f=open("C:\Users\Eli\Documents\GitHub\sandpiles\output.txt","w")
+#f.write("Test")
+#f.close()
