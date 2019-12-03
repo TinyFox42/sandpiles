@@ -6,7 +6,7 @@
 
 #Set this to where you want to save the output. In theory you can just set this to "output.txt", but for me that will just to "C:\Users\Eli\output.txt", which isn't what I want
 output_dir="C:\\Users\\Eli\\Documents\\GitHub\\sandpiles\\output"
-output_name="output.csv"
+output_name="output1.csv"
 rows=3
 cols=3
 debug=True #controls the main testing prints
@@ -114,12 +114,12 @@ def all_arrs(cs, rs):
                 a.append(b)
                 pos.append(a)
         return pos
-def main(start, adds,debug=debug):
+def main(start, adds,show=debug):
     #assumes that everything will work, or that you will see what the errors are and tell me
-    f=open(output_dir+"\\"+output_name,"w")
-    f.write("ID,Addition,ar1c1,ar1c2,ar1c3,ar2c1,ar2c2,ar2c3,ar3c1,ar3c2,ar3c3,Result,rr1c1,rr1c2,rr1c3,rr2c1,rr2c2,rr2c3,rr3c1,rr3c2,rr3c3\n")
-    if debug:
-        f.write("Test,123456789,1,2,3,4,5,6,7,8,9,987654321,9,8,7,6,5,4,3,2,1\n")
+    #f=open(output_dir+"\\"+output_name,"w")
+    #f.write("ID,Addition,ar1c1,ar1c2,ar1c3,ar2c1,ar2c2,ar2c3,ar3c1,ar3c2,ar3c3,Result,rr1c1,rr1c2,rr1c3,rr2c1,rr2c2,rr2c3,rr3c1,rr3c2,rr3c3\n")
+    #if debug:
+        #f.write("Test,123456789,1,2,3,4,5,6,7,8,9,987654321,9,8,7,6,5,4,3,2,1\n")
     #Test looks like this:
     #1  2  3
     #4  5  6
@@ -128,27 +128,55 @@ def main(start, adds,debug=debug):
     #9  8  7
     #6  5  4
     #3  2  1
+    out=[]
     for i,add in enumerate(adds):
-        f.write(str(i)+",")
-        s1=""
-        s2=""
-        for j in range(len(add)):
-            for k in range(len(add[j])):
-                s1+=str(add[j][k])
-                s2+=","+str(add[j][k])
-        f.write(s1+s2+",")
+        #f.write(str(i)+",")
+        #s1=""
+        #s2=""
+        #for j in range(len(add)):
+        #    for k in range(len(add[j])):
+        #        s1+=str(add[j][k])
+        #        s2+=","+str(add[j][k])
+        #f.write(s1+s2+",")
         p=add_piles(start,add)
-        if debug:
+        if show:
             print p
-        p=settle(p,show=debug)
-        s1=""
+        else:
+            print (100*i)/len(adds)#Because this takes awhile, shows that it hasn't hung
+        p=settle(p,show=show)
+        out.append([i,add,p])
+        #s1=""
+        #s2=""
+        #for j in range(len(p)):
+        #    for k in range(len(p[j])):
+        #        s1+=str(p[j][k])
+        #        s2+=","+str(p[j][k])
+        #f.write(s1+s2+"\n")
+    #f.close()
+    return out
+def write_pile_list(piles_list,loc=(output_dir+output_name)):
+    #meant to intake the output of main, outputs it to a .csv or .txt
+    f=open(loc,"w")
+    for l in piles_list:
+        s1=str(l[0])+","
         s2=""
-        for j in range(len(p)):
-            for k in range(len(p[j])):
-                s1+=str(p[j][k])
-                s2+=","+str(p[j][k])
-        f.write(s1+s2+"\n")
+        s3=""
+        for r in l[1]:
+            for c in r:
+                s2+=str(c)
+                s3+=","+str(c)
+        f.write(s1+s2+s3+",")
+        s2=""
+        s3=""
+        for r in l[2]:
+            for c in r:
+                s2+=str(c)
+                s3+=","+str(c)
+        f.write(s2+s3+"\n")
     f.close()
+    
+        
+                
 #f=open("C:\Users\Eli\Documents\GitHub\sandpiles\output.txt","w")
 #f.write("Test")
 #f.close()
