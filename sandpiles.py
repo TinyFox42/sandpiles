@@ -7,19 +7,16 @@
 #Set this to where you want to save the output. In theory you can just set this to "output.txt", but for me that will just to "C:\Users\Eli\output.txt", which isn't what I want
 output_dir="C:\\Users\\Eli\\Documents\\GitHub\\sandpiles\\output"
 output_name="output1.csv"
-rows=3
-cols=3
 debug=True #controls the main testing prints
 def check(pile):
     #checks that the pile is fully settled, i.e. all cells are less than 3 (in a square setup, which is all this will be able to carry for awhile)
-    #Please make sure that the dimensions of this are correct, I'm not planning on covering that up
-    for i in range(rows):
-        for j in range(cols):
+    for i in range(len(pile)):
+        for j in range(len(pile[i])):
             if pile[i][j]>3:
                 return False
     return True
 
-def simple(val):
+def simple(val,rows,cols):
     #makes a pile where all of the cells have the same value
     pile=[]
     for i in range(rows):
@@ -33,8 +30,8 @@ def settle(pile, show=debug):
     #goes through one iteration of settling the sandpile, then recurses. 
     #Show is a debugging option that you may want, prints the pile after every iteration
     sand=simple(0) #sand is the new sandpile, pile is the old
-    for i in range(rows):
-        for j in range(cols):
+    for i in range(len(pile)):
+        for j in range(len(pile[i])):
             sand[i][j]+=pile[i][j]%4
             n=pile[i][j]/4
             if n>0:
@@ -42,9 +39,9 @@ def settle(pile, show=debug):
                     sand[i-1][j]+=n
                 if j>0:
                     sand[i][j-1]+=n
-                if i<rows-1:
+                if i<len(pile)-1:
                     sand[i+1][j]+=n
-                if j<cols-1:
+                if j<len(pile[i])-1:
                     sand[i][j+1]+=n
     if show:
         print sand
@@ -56,8 +53,8 @@ def settle(pile, show=debug):
 def add_piles(pile1, pile2):
     #adds the two together, returns the resulting pile without settling, doesn't touch the input arrays
     sand=simple(0)
-    for i in range(rows):
-        for j in range(cols):
+    for i in range(len(pile1)):
+        for j in range(len(pile1[i])):
             sand[i][j]+=pile1[i][j]
             sand[i][j]+=pile2[i][j]
     return sand
