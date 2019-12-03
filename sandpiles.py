@@ -173,9 +173,21 @@ def write_pile_list(piles_list,loc=(output_dir+output_name)):
                 s3+=","+str(c)
         f.write(s2+s3+"\n")
     f.close()
-    
-        
-                
+def filter_unique_outs(outs):
+    #Originally was recursive, but it was getting close to the memory limit on a 2X2 pile
+    out=[]
+    a=outs[:]
+    while len(a)!=0:
+        b=a.pop(0)
+        out.append(b)
+        def not_unique(c):
+            if c[-1]==b[-1]:
+                return False
+            return True
+        a=filter(not_unique,a)
+    #print a
+    return out
+       
 #f=open("C:\Users\Eli\Documents\GitHub\sandpiles\output.txt","w")
 #f.write("Test")
 #f.close()
