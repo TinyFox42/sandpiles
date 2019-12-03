@@ -114,8 +114,10 @@ def all_arrs(cs, rs):
                 a.append(b)
                 pos.append(a)
         return pos
-def main(start, adds,show=debug):
-    #assumes that everything will work, or that you will see what the errors are and tell me
+def main(start, adds,show=debug,i_0=0):
+    #Start is the thing that adds are piled onto, show=True means it prints the piles at internal steps while show=False just prints % done after every add,
+    #i_0 is where it starts numbering the items
+    ##assumes that everything will work, or that you will see what the errors are and tell me
     #f=open(output_dir+"\\"+output_name,"w")
     #f.write("ID,Addition,ar1c1,ar1c2,ar1c3,ar2c1,ar2c2,ar2c3,ar3c1,ar3c2,ar3c3,Result,rr1c1,rr1c2,rr1c3,rr2c1,rr2c2,rr2c3,rr3c1,rr3c2,rr3c3\n")
     #if debug:
@@ -142,9 +144,9 @@ def main(start, adds,show=debug):
         if show:
             print p
         else:
-            print (100*i)/len(adds)#Because this takes awhile, shows that it hasn't hung
+            print str((100*i)/len(adds))+"%"#Because this takes awhile, shows that it hasn't hung
         p=settle(p,show=show)
-        out.append([i,add,p])
+        out.append([i+i_0,add,p])
         #s1=""
         #s2=""
         #for j in range(len(p)):
