@@ -29,7 +29,7 @@ def simple(val,rows,cols):
 def settle(pile, show=debug):
     #goes through one iteration of settling the sandpile, then recurses. 
     #Show is a debugging option that you may want, prints the pile after every iteration
-    sand=simple(0) #sand is the new sandpile, pile is the old
+    sand=simple(0,len(pile),len(pile[0])) #sand is the new sandpile, pile is the old
     for i in range(len(pile)):
         for j in range(len(pile[i])):
             sand[i][j]+=pile[i][j]%4
@@ -52,7 +52,7 @@ def settle(pile, show=debug):
         return settle(sand,show)
 def add_piles(pile1, pile2):
     #adds the two together, returns the resulting pile without settling, doesn't touch the input arrays
-    sand=simple(0)
+    sand=simple(0,len(pile1),len(pile1[0]))
     for i in range(len(pile1)):
         for j in range(len(pile1[i])):
             sand[i][j]+=pile1[i][j]
